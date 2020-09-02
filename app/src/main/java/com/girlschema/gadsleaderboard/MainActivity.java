@@ -2,9 +2,9 @@ package com.girlschema.gadsleaderboard;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
@@ -12,13 +12,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+
 
 import com.girlschema.gadsleaderboard.databinding.ActivityMainBinding;
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding activityMainBinding;
 
     //number of pages
@@ -38,6 +37,10 @@ public class MainActivity extends FragmentActivity {
         activityMainBinding.getRoot();
         View view  = activityMainBinding.getRoot();
         setContentView(view);
+        //custom toolbar
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.toolbar);
+
         //instantiate the view pager and pager adapter
         mViewPager = activityMainBinding.viewPager;
         mPageAdapter = new MainActivityAdapter(getSupportFragmentManager());
