@@ -68,8 +68,7 @@ public class MainActivity extends FragmentActivity {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            switch ()
-
+            return new LeadersBoardFragment();
         }
 
         @Override
