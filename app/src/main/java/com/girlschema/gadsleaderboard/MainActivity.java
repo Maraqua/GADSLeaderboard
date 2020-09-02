@@ -1,6 +1,7 @@
 package com.girlschema.gadsleaderboard;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -15,13 +16,16 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.girlschema.gadsleaderboard.databinding.ActivityMainBinding;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends FragmentActivity {
     private ActivityMainBinding activityMainBinding;
+
     //number of pages
     private static  final  int NUM_PAGES = 2;
     //number of fragments
-
+    private  static final  int LEARNING_LEADERS = 0;
+    private  static  final int SKILL_LEADERS =1;
     //swipe
     private  ViewPager mViewPager;
     //provide pages to the view
@@ -33,14 +37,14 @@ public class MainActivity extends FragmentActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         activityMainBinding.getRoot();
         View view  = activityMainBinding.getRoot();
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(view);
         //instantiate the view pager and pager adapter
         mViewPager = activityMainBinding.viewPager;
         mPageAdapter = new MainActivityAdapter(getSupportFragmentManager());
+        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setAdapter(mPageAdapter);
+        TabLayout tabLayout = activityMainBinding.tabLayout;
+        tabLayout.setupWithViewPager(mViewPager);
 
      
         
@@ -68,12 +72,31 @@ public class MainActivity extends FragmentActivity {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            return new LeadersBoardFragment();
+            switch (position){
+                case LEARNING_LEADERS:
+                    return new LeadersBoardFragment();
+                case SKILL_LEADERS:
+                    return new SkillIqFragment();
+
+            }
+            return null;
         }
 
         @Override
         public int getCount() {
             return NUM_PAGES;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position){
+                case LEARNING_LEADERS:
+                    return "Learning Leaders";
+                case SKILL_LEADERS:
+                    return "Skill IQ Leaders";
+            }
+            return null;
         }
     }
 }
