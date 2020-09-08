@@ -48,7 +48,7 @@ public class LeadersBoardFragment extends Fragment {
             @Override
             public void onFailure(Call<List<LearnerModel>> call, Throwable t) {
 
-                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
 
