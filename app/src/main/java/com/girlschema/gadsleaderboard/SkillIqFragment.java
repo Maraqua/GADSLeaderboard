@@ -19,8 +19,8 @@ import com.girlschema.gadsleaderboard.databinding.FragmentSkillIqBinding;
 
 import com.girlschema.gadsleaderboard.model.SkillIQModel;
 
+import com.girlschema.gadsleaderboard.network.ApiInterface;
 import com.girlschema.gadsleaderboard.network.RetrofitClientInstance;
-import com.girlschema.gadsleaderboard.network.SkillIQData;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class SkillIqFragment extends Fragment {
         mSkillIQBinding = FragmentSkillIqBinding.inflate(inflater,container, false);
         View view = mSkillIQBinding.getRoot();
         /*Create handle for the RetrofitInstance interface*/
-        SkillIQData skillIQData = RetrofitClientInstance.getRetrofitInstance().create(SkillIQData.class);
+        ApiInterface skillIQData = RetrofitClientInstance.getRetrofitInstance().getClient().create(ApiInterface.class);
         Call<List<SkillIQModel>> call = skillIQData.getSkillIQList();
         call.enqueue(new Callback<List<SkillIQModel>>() {
             @Override

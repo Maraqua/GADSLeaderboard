@@ -8,11 +8,12 @@
 
     <Button
         android:id="@+id/submitProjectBtn"
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@drawable/rounded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:clickable="true"
         android:onClick="projectSubmit"
-        android:text="@string/submit" />
+        android:text="@string/submit"
+        android:textColor="@color/colorPrimaryDark"/>
 </androidx.appcompat.widget.Toolbar>
