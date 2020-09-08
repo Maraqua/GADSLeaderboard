@@ -1,19 +1,54 @@
 package com.girlschema.gadsleaderboard.network;
 
+import android.content.Context;
+
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Interceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClientInstance {
-    private static Retrofit sRetrofit;
-    private static final String BASE_URL = "https://gadsapi.herokuapp.com";
-    public  static  Retrofit getRetrofitInstance(){
-        if (sRetrofit == null){
-            sRetrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory
-                            .create())
-                    .build();
+
+
+    public static  RetrofitClientInstance sRetrofitClientInstance;
+    private  Retrofit getRetrofit = null;
+    private  Retrofit postRetrofit = null;
+    private static final String HTTPS_GADSAPI_HEROKUAPP = "https://gadsapi.herokuapp.com";
+    private static final String HTTPS_DOCS_GOOGLE_COM_FORMS = "https://docs.google.com/forms/d/e";
+
+    public  static  RetrofitClientInstance getRetrofitInstance(){
+        if (sRetrofitClientInstance == null){
+            sRetrofitClientInstance = new RetrofitClientInstance();
         }
-        return sRetrofit;
+        return sRetrofitClientInstance;
+
+    }
+    public Retrofit getClient() {
+        return getClient(null);
+    }
+
+    public Retrofit postClient() {
+        return postClient(null);
+    }
+    private Retrofit getClient(final  Context context){
+
+        getRetrofit = new Retrofit.Builder()
+                .baseUrl(HTTPS_GADSAPI_HEROKUAPP)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        return getRetrofit;
+    }
+    private Retrofit postClient(final  Context context){
+
+        postRetrofit = new Retrofit.Builder()
+                .baseUrl(HTTPS_DOCS_GOOGLE_COM_FORMS)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        return postRetrofit;
     }
 }

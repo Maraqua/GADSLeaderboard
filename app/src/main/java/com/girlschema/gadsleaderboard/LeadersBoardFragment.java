@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.girlschema.gadsleaderboard.adapter.LearnerRecyclerAdapter;
 import com.girlschema.gadsleaderboard.databinding.FragmentLeadersBoardBinding;
 import com.girlschema.gadsleaderboard.model.LearnerModel;
-import com.girlschema.gadsleaderboard.network.LearnerData;
+import com.girlschema.gadsleaderboard.network.ApiInterface;
 import com.girlschema.gadsleaderboard.network.RetrofitClientInstance;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class LeadersBoardFragment extends Fragment {
         mLeadersBoardBinding = FragmentLeadersBoardBinding.inflate(inflater,container, false);
         View view = mLeadersBoardBinding.getRoot();
         /*Create handle for the RetrofitInstance interface*/
-        LearnerData learnerData = RetrofitClientInstance.getRetrofitInstance().create(LearnerData.class);
+        ApiInterface learnerData = RetrofitClientInstance.getRetrofitInstance().getClient().create(ApiInterface.class);
         Call<List<LearnerModel>> call = learnerData.getLearnerList();
         call.enqueue(new Callback<List<LearnerModel>>() {
             @Override
@@ -48,7 +47,7 @@ public class LeadersBoardFragment extends Fragment {
             @Override
             public void onFailure(Call<List<LearnerModel>> call, Throwable t) {
 
-                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
 

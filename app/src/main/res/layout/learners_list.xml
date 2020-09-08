@@ -26,7 +26,10 @@
                     android:id="@+id/top_learner"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:scaleType="centerCrop" />
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

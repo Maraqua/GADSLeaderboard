@@ -10,15 +10,17 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 
 import com.girlschema.gadsleaderboard.databinding.ActivityMainBinding;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding activityMainBinding;
+    private ActivityMainBinding mActivityMainBinding;
 
     //number of pages
     private static  final  int NUM_PAGES = 2;
@@ -29,29 +31,42 @@ public class MainActivity extends AppCompatActivity {
     private  ViewPager mViewPager;
     //provide pages to the view
     private PagerAdapter mPageAdapter;
-    
+    private  Button mSubmitProject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        activityMainBinding.getRoot();
-        View view  = activityMainBinding.getRoot();
+        mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        mActivityMainBinding.getRoot();
+        View view  = mActivityMainBinding.getRoot();
         setContentView(view);
-        //custom toolbar
+        //toolbar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.toolbar);
+        //go to ProjectSubmitActivity
+        mSubmitProject = findViewById(R.id.submitProjectBtn);
 
         //instantiate the view pager and pager adapter
-        mViewPager = activityMainBinding.viewPager;
+        mViewPager = mActivityMainBinding.viewPager;
         mPageAdapter = new MainActivityAdapter(getSupportFragmentManager());
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setAdapter(mPageAdapter);
-        TabLayout tabLayout = activityMainBinding.tabLayout;
+        TabLayout tabLayout = mActivityMainBinding.tabLayout;
         tabLayout.setupWithViewPager(mViewPager);
 
      
         
     }
+    public void projectSubmit(View view) {
+        mSubmitProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,ProjectSubmit.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {

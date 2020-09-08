@@ -4,17 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack"
+    android:background="@drawable/launch"
     tools:context=".SplashActivity">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="284dp"
-        android:layout_height="485dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/brand"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
