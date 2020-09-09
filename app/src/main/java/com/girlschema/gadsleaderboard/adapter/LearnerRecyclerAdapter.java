@@ -48,7 +48,7 @@ public class LearnerRecyclerAdapter extends  RecyclerView.Adapter<LearnerRecycle
         Picasso.Builder picassoBuilder = new Picasso.Builder(mContext);
         picassoBuilder.downloader(new OkHttp3Downloader(mContext));
         picassoBuilder.build().load(mLearnerModelList.get(position).getBadgeUrl())
-                .placeholder((R.drawable.ic_launcher_background))
+                .placeholder( R.drawable.progress_animation )
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.mTopLearnerImage);
     }
