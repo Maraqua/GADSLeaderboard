@@ -46,7 +46,7 @@ public class SkillIQRecyclerAdapter extends RecyclerView.Adapter<SkillIQRecycler
         Picasso.Builder picassoBuilder = new Picasso.Builder(mContext);
         picassoBuilder.downloader(new OkHttp3Downloader(mContext));
         picassoBuilder.build().load(mSkillIQModelList.get(position).getBadgeUrl())
-                .placeholder((R.drawable.ic_launcher_background))
+                .placeholder( R.drawable.progress_animation )
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.mSkillBadge);
     }
