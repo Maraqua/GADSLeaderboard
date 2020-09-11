@@ -18,11 +18,11 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            activitySplashBinding = ActivitySplashBinding.inflate(getLayoutInflater());
-            View view = activitySplashBinding.getRoot();
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            activitySplashBinding = ActivitySplashBinding.inflate(getLayoutInflater());
+            View view = activitySplashBinding.getRoot();
+
 
             setContentView(view);
 
