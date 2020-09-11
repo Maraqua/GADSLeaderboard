@@ -119,7 +119,6 @@
             android:layout_margin="16dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_orange"
-            android:onClick="confirmButton"
             android:padding="8dp"
             android:text="@string/submit"
             android:textColor="@color/colorAccent"

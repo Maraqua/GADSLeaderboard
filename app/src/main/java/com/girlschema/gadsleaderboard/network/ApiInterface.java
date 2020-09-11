@@ -19,7 +19,7 @@ public interface ApiInterface {
     Call<List<SkillIQModel>>getSkillIQList();
 
     @FormUrlEncoded
-    @POST("1FAIpQLSf9d1TcNU6zc6KR8bSEM41Z1g1zl35cwZr2xyjIhaMAz8WChQ/formResponses1FAIpQLSf9d1TcNU6zc6KR8bSEM41Z1g1zl35cwZr2xyjIhaMAz8WChQ/formResponses")
+    @POST("1FAIpQLSf9d1TcNU6zc6KR8bSEM41Z1g1zl35cwZr2xyjIhaMAz8WChQ/formResponse/")
     Call<ResponseBody> submitProjectForm(
             @Field("entry.1877115667")String fname,
             @Field("entry.2006916086")String lname,
