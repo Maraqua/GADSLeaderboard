@@ -27,12 +27,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProjectSubmit extends AppCompatActivity {
-        private ActivityProjectSubmitBinding mActivityProjectSubmitBinding;
-    private TextView mTextView;
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
             .baseUrl("https://docs.google.com/forms/u/0/d/e/")
             .addConverterFactory(GsonConverterFactory.create());
-    public static Retrofit sRetrofit  =retrofitBuilder.build();
+    public static Retrofit sRetrofit  = retrofitBuilder.build();
+        private ActivityProjectSubmitBinding mActivityProjectSubmitBinding;
+    private TextView mTextView;
+
 
 
     @Override
@@ -82,8 +83,7 @@ public class ProjectSubmit extends AppCompatActivity {
                     lInk.requestFocus();
                     lInk.setError("Empty Field");
                 }else {
-                    //Toast.makeText(ProjectSubmit.this,"Button clicked",Toast.LENGTH_SHORT).show();
-
+                    mActivityProjectSubmitBinding.showFields.setVisibility(View.INVISIBLE);
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProjectSubmit.this);
                     final AlertDialog dialogConfirm = alertDialogBuilder.create();
                     dialogConfirm.show();
@@ -135,14 +135,16 @@ public class ProjectSubmit extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProjectSubmit.this);
-                AlertDialog dialogSuccess = alertDialogBuilder.create();
-                dialogSuccess.show();
-                LayoutInflater layoutInflater = ProjectSubmit.this.getLayoutInflater();
-                View view = layoutInflater.inflate(R.layout.success_dialog,null);
-                dialogSuccess.getWindow().setContentView(view);
-//                dialogSuccess.dismiss();
-                Log.d("Success","The response was"+response.raw().toString());
+              if (response.isSuccessful()){
+                  mActivityProjectSubmitBinding.showFields.setVisibility(View.INVISIBLE);
+                  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProjectSubmit.this);
+                  AlertDialog dialogSuccess = alertDialogBuilder.create();
+                  dialogSuccess.show();
+                  LayoutInflater layoutInflater = ProjectSubmit.this.getLayoutInflater();
+                  View view = layoutInflater.inflate(R.layout.success_dialog,null);
+                  dialogSuccess.getWindow().setContentView(view);
+
+              }
 
             }
 
@@ -150,13 +152,13 @@ public class ProjectSubmit extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                mActivityProjectSubmitBinding.showFields.setVisibility(View.INVISIBLE);
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ProjectSubmit.this);
                 AlertDialog dialogError = alertBuilder.create();
                 dialogError.show();
                 LayoutInflater layoutInflater = ProjectSubmit.this.getLayoutInflater();
                 View view = layoutInflater.inflate(R.layout.error_dialog,null);
                 dialogError.getWindow().setContentView(view);
-              //  dialogError.dismiss();
 
             }
         });
