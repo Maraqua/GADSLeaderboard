@@ -15,7 +15,7 @@ public class RetrofitClientInstance {
     private  Retrofit getRetrofit = null;
     private  Retrofit postRetrofit = null;
     private static final String HTTPS_GADSAPI_HEROKUAPP = "https://gadsapi.herokuapp.com";
-    private static final String HTTPS_DOCS_GOOGLE_COM_FORMS = "https://docs.google.com/forms/d/e";
+    private static final String HTTPS_DOCS_GOOGLE_COM_FORMS = "https://docs.google.com/forms/d/e/";
 
     public  static  RetrofitClientInstance getRetrofitInstance(){
         if (sRetrofitClientInstance == null){

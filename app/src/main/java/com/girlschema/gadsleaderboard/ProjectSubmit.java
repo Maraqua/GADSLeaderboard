@@ -1,18 +1,18 @@
 package com.girlschema.gadsleaderboard;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.girlschema.gadsleaderboard.databinding.ActivityProjectSubmitBinding;
 import com.girlschema.gadsleaderboard.network.ApiInterface;
@@ -25,7 +25,6 @@ import retrofit2.Response;
 
 public class ProjectSubmit extends AppCompatActivity {
         private ActivityProjectSubmitBinding mActivityProjectSubmitBinding;
-        FragmentManager mFragmentManager = getSupportFragmentManager();
     private TextView mTextView;
 
 
@@ -36,47 +35,89 @@ public class ProjectSubmit extends AppCompatActivity {
       mActivityProjectSubmitBinding.getRoot();
         View view = mActivityProjectSubmitBinding.getRoot();
         setContentView(view);
+        final EditText fName= mActivityProjectSubmitBinding.editTextFname;
+        final EditText lName = mActivityProjectSubmitBinding.editTextLname;
+        final EditText eMail = mActivityProjectSubmitBinding.editTextEmail;
+        final EditText lInk=  mActivityProjectSubmitBinding.editTextLink;
         mTextView = mActivityProjectSubmitBinding.textView;
-        mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG );
+        mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //custom toolbar
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.toolbar_submit);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mActivityProjectSubmitBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(ProjectSubmit.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         //Confirm submit
-    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.:
-//                finish();
-//                return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        return true;
-//    }
-    public void confirmButton (View view){
         mActivityProjectSubmitBinding.buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(ProjectSubmit.this,"Button clicked",Toast.LENGTH_SHORT).show();
-            submitProject(
-                    mActivityProjectSubmitBinding.editTextFname.getText().toString(),
-                    mActivityProjectSubmitBinding.editTextEmail.getText().toString(),
-                    mActivityProjectSubmitBinding.editTextEmail.getText().toString(),
-                    mActivityProjectSubmitBinding.editTextLink.getText().toString()
-            );
+                if ( fName.length() == 0)
+                {
+                    fName.requestFocus();
+                    fName.setError("Empty Field");
+
+                }else if(lName.length() == 0)
+                {
+                    lName.requestFocus();
+                    lName.setError("Empty Field");
+                }
+                else if(eMail.length() == 0)
+                {
+                    eMail.requestFocus();
+                    eMail.setError("Empty Field");
+                }
+                else if(lInk.length() == 0)
+                {
+                    lInk.requestFocus();
+                    lInk.setError("Empty Field");
+                }else {
+                    //Toast.makeText(ProjectSubmit.this,"Button clicked",Toast.LENGTH_SHORT).show();
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProjectSubmit.this);
+                    final AlertDialog dialogConfirm = alertDialogBuilder.create();
+                    dialogConfirm.show();
+                    final LayoutInflater layoutInflater = ProjectSubmit.this.getLayoutInflater();
+                    final View alertView = layoutInflater.inflate(R.layout.confirm_submit, null);
+                    dialogConfirm.getWindow().setContentView(alertView);
+                    ImageView cancelBtn = alertView.findViewById(R.id.ImageViewCancel);
+                    cancelBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            dialogConfirm.dismiss();
+
+                        }
+                    });
+
+                    Button confirmBtn = alertView.findViewById(R.id.confirmBtn);
+                    confirmBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialogConfirm.dismiss();
+                            executeSubmitProject(
+                                    fName.getText().toString(),
+                                    lName.getText().toString(),
+                                    eMail.getText().toString(),
+                                    lInk.getText().toString()
+                            );
 
 
+                        }
+                    });
+
+                }
             }
         });
+
     }
 
-    private void submitProject(String emailAddress,String fname,String lname,String linkToProject) {
+
+
+    private void executeSubmitProject(String fname,String lname,String emailAddress,String linkToProject) {
         ApiInterface submitForm = RetrofitClientInstance.getRetrofitInstance().postClient().create(ApiInterface.class);
         Call<ResponseBody> call = submitForm.submitProjectForm(
                 fname,
@@ -87,13 +128,26 @@ public class ProjectSubmit extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(ProjectSubmit.this, "submitted", Toast.LENGTH_SHORT).show();
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProjectSubmit.this);
+                    AlertDialog dialogSuccess = alertDialogBuilder.create();
+                    dialogSuccess.show();
+                    LayoutInflater layoutInflater = ProjectSubmit.this.getLayoutInflater();
+                    View view = layoutInflater.inflate(R.layout.success_dialog,null);
+                    dialogSuccess.getWindow().setContentView(view);
+                   // dialogSuccess.dismiss();
 
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(ProjectSubmit.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ProjectSubmit.this);
+                AlertDialog dialogError = alertBuilder.create();
+                dialogError.show();
+                LayoutInflater layoutInflater = ProjectSubmit.this.getLayoutInflater();
+                View view = layoutInflater.inflate(R.layout.error_dialog,null);
+                dialogError.getWindow().setContentView(view);
+              //  dialogError.dismiss();
 
             }
         });

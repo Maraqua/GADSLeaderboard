@@ -54,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = mActivityMainBinding.tabLayout;
         tabLayout.setupWithViewPager(mViewPager);
 
-     
-        
-    }
-    public void projectSubmit(View view) {
         mSubmitProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        
     }
+
+
 
 
     @Override
